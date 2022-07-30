@@ -7,10 +7,14 @@ import Dashboard from '../pages/Dashboard'
 import Login from '../pages/Login'
 import Profile from '../pages/Profile'
 import Register from '../pages/Register'
+import {theme} from '../globalyStyles/theme';
+import { ThemeProvider,  } from '@mui/material/styles';
 
 const AppRouter = () => {
+
   return (
     <BrowserRouter>
+    
       <Navbar />
       <Routes>
         <Route path="/" element={<Dashboard />} />
@@ -20,6 +24,7 @@ const AppRouter = () => {
         <Route path="profile" element={<Profile />} />
     
       </Routes>
+
     </BrowserRouter>
   )
 }
