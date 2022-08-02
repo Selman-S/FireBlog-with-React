@@ -36,7 +36,8 @@ fontFamily: "Girassol",
       contrastText: '#fff',
       dark: '#0225b2',
       light: '#355eff',
-    },
+      white:'#fff'
+      },
     secondary: {
       main: '#ffde03',
       contrastText: '#000',

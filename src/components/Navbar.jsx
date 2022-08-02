@@ -56,7 +56,7 @@ const Navbar = () => {
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
-              backgroundColor:'secondary.main'
+          
             }}
           >
             LOGO
@@ -93,7 +93,10 @@ const Navbar = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center"><Link to={page=='Dashboard'? '/' : page}>{page}</Link></Typography>
+                  <Typography textAlign="center">
+                    <Link style={{ textDecoration: 'none',color:'#355eff'}}  to={page=='Dashboard'? '/' : page} underline="hover">{page}</Link>
+                   
+                    </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -116,6 +119,7 @@ const Navbar = () => {
               textDecoration: 'none'
             }}
           >
+            
             ──── 	&lt;ed8en/&gt; Blog ────
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
@@ -123,9 +127,9 @@ const Navbar = () => {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color:'primary.white', display: 'block' }}
               >
-               <Link to={page=='Dashboard' ? '/' : page}>{page}</Link>
+               <Link to={page=='Dashboard' ? '/' : page} style={{color:'white', textDecoration: 'none',fontFamily:'Girassol'}} >{page}</Link>
               </Button>
             ))}
           </Box>
