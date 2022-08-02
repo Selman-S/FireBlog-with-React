@@ -12,6 +12,10 @@ import { Link } from 'react-router-dom'
 import blogLogin from '../assets/blok.png'
 
 const Login = () => {
+  const handleSubmit = e => {
+    e.preventDefault()
+    console.log('çalişti')
+  }
   return (
     <Grid>
       <Paper
@@ -37,7 +41,8 @@ const Login = () => {
             Sign in
           </Typography>
         </Grid>
-        <Grid align="center">
+
+        <Grid align="center" component="form" onSubmit={handleSubmit}>
           <TextField
             sx={{ mt: 2, fontFamily: 'roboto' }}
             label="Email"
