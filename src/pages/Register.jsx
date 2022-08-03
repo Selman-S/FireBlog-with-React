@@ -6,19 +6,30 @@ import {
   Typography,
   Button,
 } from '@mui/material'
+import googleSvg from '../assets/google.svg'
 
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import blogLogin from '../assets/blok.png'
+import { createUser } from '../helper/firebase'
 
 const Register = () => {
+  const navigate = useNavigate()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const handleSubmit = e => {
+    e.preventDefault(e)
+    createUser(email, password, navigate)
+    setEmail('')
+    setPassword('')
+  }
   return (
     <Grid>
       <Paper
         elevation={10}
         style={{
           padding: 20,
-          height: '500px',
+          height: '530px',
           width: '350px',
           margin: '3rem auto 5rem',
         }}
@@ -37,20 +48,24 @@ const Register = () => {
             Sign up
           </Typography>
         </Grid>
-        <Grid align="center">
+        <Grid align="center" component="form" onSubmit={handleSubmit}>
           <TextField
             sx={{ mt: 2, fontFamily: 'roboto' }}
             label="Email"
             inputProps={{ style: { fontFamily: 'roboto' } }}
-            InputLabelProps={{ style: { fontFamily: 'roboto' } }} // font size of input label
+            InputLabelProps={{ style: { fontFamily: 'roboto' } }}
+            value={email}
+            onChange={e => setEmail(e.target.value)}
             placeholder=" Enter Email"
             fullWidth
           />
           <TextField
             sx={{ mt: 2, fontFamily: 'roboto' }}
             label="Password"
-            placeholder=" Enter Email"
+            placeholder=" Enter Password"
             type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
             fullWidth
             inputProps={{ style: { fontFamily: 'roboto' } }}
             InputLabelProps={{ style: { fontFamily: 'roboto' } }}
@@ -68,6 +83,16 @@ const Register = () => {
             Do you have an account ?<Link to="/login">Login</Link>
           </Typography>
         </Grid>
+        <Button
+          sx={{ mt: 2, fontFamily: 'roboto' }}
+          variant="contained"
+          fullWidth
+        >
+          Continue with Google{' '}
+          <Avatar sx={{ backgroundColor: 'inherit', height: '27px' }}>
+            <img src={googleSvg} style={{ width: '25px' }} alt="" />
+          </Avatar>
+        </Button>
       </Paper>
     </Grid>
   )
