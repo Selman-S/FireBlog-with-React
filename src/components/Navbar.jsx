@@ -10,21 +10,18 @@ import { styled, alpha } from '@mui/material/styles'
 import InputBase from '@mui/material/InputBase'
 import Badge from '@mui/material/Badge'
 import MenuItem from '@mui/material/MenuItem'
-import MenuIcon from '@mui/icons-material/Menu'
 import SearchIcon from '@mui/icons-material/Search'
-import AccountCircle from '@mui/icons-material/AccountCircle'
 import MailIcon from '@mui/icons-material/Mail'
 import NotificationsIcon from '@mui/icons-material/Notifications'
-import MoreIcon from '@mui/icons-material/MoreVert'
-import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
 import Tooltip from '@mui/material/Tooltip'
 import { grey } from '@mui/material/colors'
 import cw from '../assets/cw.jpeg'
+import HomeIcon from '@mui/icons-material/Home'
+import PostAddIcon from '@mui/icons-material/PostAdd'
 import { AuthContext } from '../context/AuthContext'
 import { useContext } from 'react'
 import { logout } from '../helper/firebase'
-import { TextField } from '@mui/material'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -87,102 +84,15 @@ const Navbar = () => {
     handleCloseUserMenu()
     setUpdateProfile(currentUser)
   }
-
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
-
-  const isMenuOpen = Boolean(anchorEl)
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
-
-  const handleProfileMenuOpen = event => {
-    setAnchorEl(event.currentTarget)
+  console.log(currentUser)
+  if (currentUser !== null) {
+    if (currentUser.displayName === null) {
+      var useName = currentUser.email.split('@')[0]
+    } else {
+      var useName = currentUser.displayName
+    }
   }
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null)
-  }
-
-  const handleMenuClose = () => {
-    setAnchorEl(null)
-    handleMobileMenuClose()
-  }
-
-  const handleMobileMenuOpen = event => {
-    setMobileMoreAnchorEl(event.currentTarget)
-  }
-  const menuId = 'primary-search-account-menu'
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  )
-
-  const mobileMenuId = 'primary-search-account-menu-mobile'
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  )
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -201,7 +111,7 @@ const Navbar = () => {
                 </Link>
               </IconButton>
             </Box>
-            <Search sx={{ display: { xs: 'none', sm: 'block' } }}>
+            <Search sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
               <SearchIconWrapper>
                 <SearchIcon />
               </SearchIconWrapper>
@@ -210,140 +120,179 @@ const Navbar = () => {
                 inputProps={{ 'aria-label': 'search' }}
               />
             </Search>
-            <Box sx={{ flexGrow: 1, border: '1px solid green' }} />
-            asad
             <Box
               sx={{
-                display: { xs: 'none', md: 'flex' },
+                flexGrow: 1,
+
+                display: { xs: 'none', sm: 'none', md: 'block' },
+              }}
+            />
+            <Box
+              style={{
+                display: 'flex',
+                flexGrow: 1,
+                marginRight: '30%',
+                gap: '70%',
+              }}
+            >
+              <Link
+                to="/"
+                style={{
+                  fontFamily: 'roboto',
+                  color: 'white',
+                  textDecoration: 'none',
+                }}
+              >
+                <HomeIcon></HomeIcon>
+              </Link>
+              <Link
+                to="/"
+                style={{
+                  fontFamily: 'roboto',
+                  color: 'white',
+                  textDecoration: 'none',
+                }}
+              >
+                <PostAddIcon></PostAddIcon>
+              </Link>
+            </Box>
+
+            <Box
+              sx={{
+                display: { xs: 'flex', md: 'flex' },
                 border: '1px solid red',
               }}
             >
-              <Box sx={{ my: 'auto' }}>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar src="/static/images/avatar/1.jpg">
-                      <img
-                        width="40"
-                        src={
-                          currentUser
-                            ? currentUser.photoURL
-                            : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'
-                        }
-                        alt=""
-                      />
-                    </Avatar>
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: '45px' }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {currentUser ? (
-                    <Box>
-                      <MenuItem onClick={handleProfile}>
-                        <Typography textAlign="center">
-                          <Link
-                            to="profile"
-                            style={{
-                              fontFamily: 'roboto',
-                              color: grey[900],
-                              textDecoration: 'none',
-                            }}
-                          >
-                            Profile
-                          </Link>
-                        </Typography>
-                      </MenuItem>
+              <Box sx={{ display: 'flex', cursor: 'pointer' }}>
+                <Box sx={{ my: 'auto', mx: 1 }}>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar src="/static/images/avatar/1.jpg">
+                        <img
+                          width="40"
+                          src={
+                            currentUser
+                              ? currentUser.photoURL
+                              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'
+                          }
+                          alt=""
+                        />
+                      </Avatar>
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: '45px' }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {currentUser ? (
+                      <Box>
+                        <MenuItem onClick={handleProfile}>
+                          <Typography textAlign="center">
+                            <Link
+                              to="profile"
+                              style={{
+                                fontFamily: 'roboto',
+                                color: grey[900],
+                                textDecoration: 'none',
+                              }}
+                            >
+                              Profile
+                            </Link>
+                          </Typography>
+                        </MenuItem>
 
-                      <MenuItem onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center">
-                          <Link
-                            to="myposts"
-                            style={{
-                              fontFamily: 'roboto',
-                              color: grey[900],
-                              textDecoration: 'none',
-                            }}
-                          >
-                            My Post
-                          </Link>
-                        </Typography>
-                      </MenuItem>
+                        <MenuItem onClick={handleCloseUserMenu}>
+                          <Typography textAlign="center">
+                            <Link
+                              to="myposts"
+                              style={{
+                                fontFamily: 'roboto',
+                                color: grey[900],
+                                textDecoration: 'none',
+                              }}
+                            >
+                              My Post
+                            </Link>
+                          </Typography>
+                        </MenuItem>
 
-                      <MenuItem onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center">
-                          <Link
-                            to="newblog"
+                        <MenuItem onClick={handleCloseUserMenu}>
+                          <Typography textAlign="center">
+                            <Link
+                              to="newblog"
+                              style={{
+                                fontFamily: 'roboto',
+                                color: grey[900],
+                                textDecoration: 'none',
+                              }}
+                            >
+                              New
+                            </Link>
+                          </Typography>
+                        </MenuItem>
+                        <MenuItem onClick={handleLogout}>
+                          <Typography
+                            textAlign="center"
                             style={{
                               fontFamily: 'roboto',
                               color: grey[900],
                               textDecoration: 'none',
                             }}
                           >
-                            New
-                          </Link>
-                        </Typography>
-                      </MenuItem>
-                      <MenuItem onClick={handleLogout}>
-                        <Typography
-                          textAlign="center"
-                          style={{
-                            fontFamily: 'roboto',
-                            color: grey[900],
-                            textDecoration: 'none',
-                          }}
-                        >
-                          Logout
-                        </Typography>
-                      </MenuItem>
-                    </Box>
-                  ) : (
-                    <>
-                      <MenuItem onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center">
-                          <Link
-                            to="login"
-                            style={{
-                              fontFamily: 'roboto',
-                              color: grey[900],
-                              textDecoration: 'none',
-                            }}
-                          >
-                            Login
-                          </Link>
-                        </Typography>
-                      </MenuItem>
-                      <MenuItem onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center">
-                          <Link
-                            to="register"
-                            style={{
-                              fontFamily: 'roboto',
-                              color: grey[900],
-                              textDecoration: 'none',
-                            }}
-                          >
-                            Register
-                          </Link>
-                        </Typography>
-                      </MenuItem>
-                    </>
-                  )}
-                </Menu>
+                            Logout
+                          </Typography>
+                        </MenuItem>
+                      </Box>
+                    ) : (
+                      <>
+                        <MenuItem onClick={handleCloseUserMenu}>
+                          <Typography textAlign="center">
+                            <Link
+                              to="login"
+                              style={{
+                                fontFamily: 'roboto',
+                                color: grey[900],
+                                textDecoration: 'none',
+                              }}
+                            >
+                              Login
+                            </Link>
+                          </Typography>
+                        </MenuItem>
+                        <MenuItem onClick={handleCloseUserMenu}>
+                          <Typography textAlign="center">
+                            <Link
+                              to="register"
+                              style={{
+                                fontFamily: 'roboto',
+                                color: grey[900],
+                                textDecoration: 'none',
+                              }}
+                            >
+                              Register
+                            </Link>
+                          </Typography>
+                        </MenuItem>
+                      </>
+                    )}
+                  </Menu>
+                </Box>
+                <Typography onClick={handleOpenUserMenu} sx={{ my: 'auto' }}>
+                  {useName}
+                </Typography>{' '}
               </Box>
-              <Typography>asd</Typography>
               <IconButton
                 size="large"
                 aria-label="show 4 new mails"
@@ -363,22 +312,8 @@ const Navbar = () => {
                 </Badge>
               </IconButton>
             </Box>
-            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size="large"
-                aria-label="show more"
-                aria-controls={mobileMenuId}
-                aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MoreIcon />
-              </IconButton>
-            </Box>
           </Toolbar>
         </AppBar>
-        {renderMobileMenu}
-        {renderMenu}
       </Box>
     </>
   )
