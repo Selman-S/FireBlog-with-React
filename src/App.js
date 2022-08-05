@@ -3,14 +3,17 @@ import AppRouter from './app-router/AppRouter'
 import { AuthProvider } from './context/AuthContext'
 import { theme } from './globalyStyles/theme'
 import { ToastContainer } from 'react-toastify'
+import { BlogProvider } from './context/BlogContext'
 
 function App() {
   console.log(theme)
   return (
     <ThemeProvider theme={theme}>
       <AuthProvider>
-        <AppRouter></AppRouter>
-        <ToastContainer />
+        <BlogProvider>
+          <AppRouter></AppRouter>
+          <ToastContainer />
+        </BlogProvider>
       </AuthProvider>
     </ThemeProvider>
   )

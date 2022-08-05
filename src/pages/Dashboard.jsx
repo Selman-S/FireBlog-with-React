@@ -4,8 +4,18 @@ import Container from '@mui/material/Container'
 import BlogCard from '../components/BlogCard'
 import { data } from '../helper/data'
 import { Divider, Typography } from '@mui/material'
+import { useEffect } from 'react'
+import { getPosts, useFetch } from '../helper/functions'
+import { BlogContext } from '../context/BlogContext'
+import { useContext } from 'react'
 
 const Dashboard = () => {
+  const { blogs, setBlogs } = useContext(BlogContext)
+  useEffect(() => {
+    const blog = getPosts()
+    blog.then(a => setBlogs(a))
+  }, [])
+  console.log(blogs)
   return (
     <>
       <Typography>

@@ -3,15 +3,17 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
-import { Button, CardActionArea, CardActions } from '@mui/material'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import { Avatar, CardActionArea, CardActions } from '@mui/material'
+
 import { blueGrey, grey, red } from '@mui/material/colors'
 
 import { Box } from '@mui/system'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
+import { AuthContext } from '../context/AuthContext'
 
 const BlogCard = ({ card }) => {
+  const { currentUser } = React.useContext(AuthContext)
   const dateLocal = card.dateLocal.split(' ')
 
   const email = 'walter@clarusway.com'
@@ -72,7 +74,17 @@ const BlogCard = ({ card }) => {
       <CardActions>
         <Box sx={{ display: 'flex', cursor: 'default' }}>
           <Typography>
-            <AccountCircleIcon />
+            <Avatar>
+              <img
+                width="40"
+                src={
+                  card.userImgUrl
+                    ? card.userImgUrl
+                    : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'
+                }
+                alt=""
+              />
+            </Avatar>
           </Typography>{' '}
           <Typography>{email} </Typography>
         </Box>

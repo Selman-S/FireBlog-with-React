@@ -10,6 +10,7 @@ import {
 } from 'firebase/auth'
 import { initializeApp } from 'firebase/app'
 import { toastErrorNotify, toastSuccessNotify } from './toastNotify'
+import { getFirestore } from '@firebase/firestore'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCBqnuxq-a3AxPk9V6tw5obAm8Hu7ppoXU',
@@ -23,6 +24,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 
 export const auth = getAuth(app)
+export const db = getFirestore(app)
 
 function randomuser() {
   const id = Math.floor(Math.random() * 20) + 1
@@ -40,7 +42,6 @@ export const createUser = async (email, password, navigate, name) => {
       photoURL: imageurl,
     })
     toastSuccessNotify('Registered successfully!')
-    console.log(auth.currentUser)
 
     navigate('/')
   } catch (error) {
