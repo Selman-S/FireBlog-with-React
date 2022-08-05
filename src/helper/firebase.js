@@ -9,6 +9,7 @@ import {
   updateProfile,
 } from 'firebase/auth'
 import { initializeApp } from 'firebase/app'
+import { toastErrorNotify, toastSuccessNotify } from './toastNotify'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCBqnuxq-a3AxPk9V6tw5obAm8Hu7ppoXU',
@@ -23,29 +24,46 @@ const app = initializeApp(firebaseConfig)
 
 export const auth = getAuth(app)
 
+function randomuser() {
+  const id = Math.floor(Math.random() * 20) + 1
+  const url = `https://avatars.dicebear.com/v2/avataaars/${id}.svg`
+  return url
+}
 export const createUser = async (email, password, navigate, name) => {
   try {
-    let userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    )
+    await createUserWithEmailAndPassword(auth, email, password)
+    const imageurl = auth.currentUser.photoURL
+      ? auth.currentUser.photoURL
+      : randomuser()
     await updateProfile(auth.currentUser, {
       displayName: name,
+      photoURL: imageurl,
     })
+    toastSuccessNotify('Registered successfully!')
+    console.log(auth.currentUser)
+
     navigate('/')
-    console.log(userCredential)
   } catch (error) {
-    console.log(error.message)
+    toastErrorNotify(error.message)
   }
+}
+export const updaterProfile = async (dName, uEmail, eImg, navigate) => {
+  await updateProfile(auth.currentUser, {
+    displayName: dName,
+    email: uEmail,
+    photoUrl: eImg,
+  })
+  toastSuccessNotify('Profile update  successfully!')
+  navigate('/')
+  console.log(auth)
 }
 export const loginUser = async (email, password, navigate) => {
   try {
-    let userCredential = await signInWithEmailAndPassword(auth, email, password)
+    await signInWithEmailAndPassword(auth, email, password)
     navigate('/')
-    console.log(userCredential)
+    toastSuccessNotify('Logged in successfully!')
   } catch (error) {
-    console.log(error.message)
+    toastErrorNotify(error.message)
   }
 }
 
@@ -61,16 +79,18 @@ export const userObserver = setCurrentUser => {
 
 export const logout = () => {
   signOut(auth)
+  toastSuccessNotify('Logout successfully!')
 }
 
 export const signupProvider = navigate => {
   const provider = new GoogleAuthProvider()
   signInWithPopup(auth, provider)
     .then(result => {
-      console.log(result)
       navigate('/')
+      toastSuccessNotify('Logged in successfully!')
+      console.log(auth)
     })
     .catch(error => {
-      console.log(error.message)
+      toastErrorNotify(error.message)
     })
 }

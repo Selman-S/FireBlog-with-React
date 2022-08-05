@@ -5,11 +5,14 @@ export const AuthContext = createContext()
 
 export const AuthProvider = props => {
   const [currentUser, setCurrentUser] = useState(null)
+  const [updateProfile, setUpdateProfile] = useState(null)
   useEffect(() => {
     userObserver(setCurrentUser)
   }, [])
   return (
-    <AuthContext.Provider value={{ currentUser, setCurrentUser }}>
+    <AuthContext.Provider
+      value={{ currentUser, setCurrentUser, updateProfile, setUpdateProfile }}
+    >
       {props.children}
     </AuthContext.Provider>
   )

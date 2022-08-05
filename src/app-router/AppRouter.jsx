@@ -7,9 +7,11 @@ import Dashboard from '../pages/Dashboard'
 import Login from '../pages/Login'
 import Profile from '../pages/Profile'
 import Register from '../pages/Register'
-import { theme } from '../globalyStyles/theme'
-import { ThemeProvider } from '@mui/material/styles'
+import MyPosts from '../pages/MyPosts'
+
 import NewBlog from '../pages/NewBlog'
+import PrivateRouter from './PrivateRouter'
+import Details from '../pages/Details'
 
 const AppRouter = () => {
   return (
@@ -19,9 +21,21 @@ const AppRouter = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="about" element={<About />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="newblog" element={<NewBlog />} />
+        <Route path="details/:id" element={<PrivateRouter />}>
+          <Route path="" element={<Details />} />
+        </Route>
+        <Route path="about" element={<PrivateRouter />}>
+          <Route path="" element={<About />} />
+        </Route>
+        <Route path="profile" element={<PrivateRouter />}>
+          <Route path="" element={<Profile />} />
+        </Route>
+        <Route path="myposts" element={<PrivateRouter />}>
+          <Route path="" element={<MyPosts />} />
+        </Route>
+        <Route path="newblog" element={<PrivateRouter />}>
+          <Route path="" element={<NewBlog />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

@@ -1,33 +1,33 @@
 import { AuthContext } from '../context/AuthContext'
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import * as React from 'react'
 import Card from '@mui/material/Card'
 import { Button, InputLabel } from '@mui/material'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
-import FormControl from '@mui/material/FormControl'
 import Typography from '@mui/material/Typography'
 import { Box, Grid, TextField } from '@mui/material'
 
-import { styled } from '@mui/material/styles'
+import { useState } from 'react'
+import { updaterProfile } from '../helper/firebase'
 
-export default function ImgMediaCard() {
+export default function Profile() {
+  const navigate = useNavigate()
   const { currentUser } = useContext(AuthContext)
-  const ValidationTextField = styled(TextField)({
-    '& input:valid + fieldset': {
-      borderColor: 'primary.main',
-      borderWidth: 2,
-    },
-    '& input:invalid + fieldset': {
-      borderColor: 'red',
-      borderWidth: 2,
-    },
-    '& input:valid:focus + fieldset': {
-      borderLeftWidth: 6,
-      padding: '4px !important', // override inline-style
-    },
-  })
-  console.log(currentUser)
+  const { updateProfile } = useContext(AuthContext)
+  const [displayName, setDisplayName] = useState(updateProfile.displayName)
+  const [email, setEmail] = useState(updateProfile.email)
+  const [image, setImage] = useState(updateProfile.photoURL)
+
+  const handleUpdate = () => {
+    updaterProfile(displayName, email, image, navigate)
+    setDisplayName('')
+    setEmail('')
+    setImage('')
+    navigate('/')
+  }
+
   return (
     <Grid
       container
@@ -37,8 +37,8 @@ export default function ImgMediaCard() {
       justifyContent="center"
       style={{ minHeight: '80vh' }}
     >
-      <Grid item xs={3} style={{ display: 'flex' }}>
-        <Box sx={{ maxWidth: 345, mx: 10 }}>
+      <Grid item xs={3} sx={{ display: { xs: 'block', md: 'flex' } }}>
+        <Box sx={{ maxWidth: 345, m: 10 }}>
           <CardMedia
             component="img"
             alt={currentUser.displayName}
@@ -48,43 +48,52 @@ export default function ImgMediaCard() {
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              Display Name :{currentUser.displayName}
+              {currentUser.displayName}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Email :{currentUser.email}
+              {currentUser.email}
             </Typography>
           </CardContent>
         </Box>{' '}
-        <Card sx={{ width: '345px' }}>
+        <Card sx={{ width: '345px', m: 10 }}>
           <CardContent fullWidth>
             <InputLabel sx={{ mt: 3 }} fullWidth>
               Update Displayname
             </InputLabel>
-            <ValidationTextField
+            <TextField
               label="displayname"
               variant="outlined"
-              defaultValue=""
+              value={displayName}
+              onChange={e => setDisplayName(e.target.value)}
               fullWidth
               id="validation-outlined-input"
             />{' '}
             <InputLabel sx={{ mt: 3 }}>Update Email</InputLabel>
-            <ValidationTextField
+            <TextField
               label="email"
               fullWidth
               variant="outlined"
-              defaultValue=""
+              onChange={e => setEmail(e.target.value)}
+              value={email}
               id="validation-outlined-input"
             />
             <InputLabel sx={{ mt: 3 }}>Update Image</InputLabel>
-            <ValidationTextField
+            <TextField
               label="imageUrl"
               variant="outlined"
               fullWidth
-              defaultValue=""
+              onChange={e => setImage(e.target.value)}
+              value={image}
               id="validation-outlined-input"
             />
             <Grid>
-              <Button fullWidth sx={{ mt: 3 }} variant="contained" maxWidth>
+              <Button
+                fullWidth
+                sx={{ mt: 3 }}
+                onClick={handleUpdate}
+                variant="contained"
+                maxWidth
+              >
                 Update Profile
               </Button>
             </Grid>

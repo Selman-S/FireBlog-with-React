@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import Menu from '@mui/material/Menu'
-import MenuIcon from '@mui/icons-material/Menu'
+
 import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
 
@@ -23,19 +23,12 @@ import { logout } from '../helper/firebase'
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext)
-  console.log(currentUser)
-  const [anchorElNav, setAnchorElNav] = React.useState(null)
+  const { setUpdateProfile } = useContext(AuthContext)
+
   const [anchorElUser, setAnchorElUser] = React.useState(null)
 
-  const handleOpenNavMenu = event => {
-    setAnchorElNav(event.currentTarget)
-  }
   const handleOpenUserMenu = event => {
     setAnchorElUser(event.currentTarget)
-  }
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null)
   }
 
   const handleCloseUserMenu = () => {
@@ -45,6 +38,10 @@ const Navbar = () => {
   const handleLogout = () => {
     handleCloseUserMenu()
     logout()
+  }
+  const handleProfile = () => {
+    handleCloseUserMenu()
+    setUpdateProfile(currentUser)
   }
   return (
     <AppBar position="static" sx={{ backgroundColor: 'primary.main' }}>
@@ -56,7 +53,6 @@ const Navbar = () => {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
               color="inherit"
             >
               <Link to="/">
@@ -129,7 +125,7 @@ const Navbar = () => {
             >
               {currentUser ? (
                 <Box>
-                  <MenuItem onClick={handleCloseUserMenu}>
+                  <MenuItem onClick={handleProfile}>
                     <Typography textAlign="center">
                       <Link
                         to="profile"
@@ -140,6 +136,21 @@ const Navbar = () => {
                         }}
                       >
                         Profile
+                      </Link>
+                    </Typography>
+                  </MenuItem>
+
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">
+                      <Link
+                        to="myposts"
+                        style={{
+                          fontFamily: 'roboto',
+                          color: grey[900],
+                          textDecoration: 'none',
+                        }}
+                      >
+                        My Post
                       </Link>
                     </Typography>
                   </MenuItem>
