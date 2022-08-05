@@ -8,19 +8,20 @@ import {
   Typography,
 } from '@mui/material'
 import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import blogLogin from '../assets/blok.png'
 import { AuthContext } from '../context/AuthContext'
 import googleSvg from '../assets/google.svg'
+import { loginUser, signupProvider } from '../helper/firebase'
 
 const Login = () => {
-  const { auth, setAuth } = useContext(AuthContext)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate()
+
   const handleSubmit = e => {
     e.preventDefault()
-    console.log('çalişti')
-    setAuth('asım')
+    loginUser(email, password, navigate)
   }
 
   return (
@@ -29,7 +30,7 @@ const Login = () => {
         elevation={10}
         style={{
           padding: 20,
-          height: '530px',
+          height: '535px',
           width: '350px',
           margin: '3rem auto 5rem',
         }}
@@ -80,20 +81,22 @@ const Login = () => {
           >
             Login
           </Button>
-          <Typography sx={{ mt: 2, fontFamily: 'roboto' }}>
-            Don't you have an account ?<Link to="/register">Register</Link>
-          </Typography>
+          <Typography sx={{ mt: 1, fontFamily: 'roboto' }}>or</Typography>
         </Grid>
         <Button
-          sx={{ mt: 2, fontFamily: 'roboto' }}
+          sx={{ mt: 1, fontFamily: 'roboto' }}
           variant="contained"
           fullWidth
+          onClick={() => signupProvider(navigate)}
         >
           Continue with Google{' '}
           <Avatar sx={{ backgroundColor: 'inherit', height: '27px' }}>
             <img src={googleSvg} style={{ width: '25px' }} alt="" />
           </Avatar>
         </Button>
+        <Typography align="center" sx={{ mt: 2, fontFamily: 'roboto' }}>
+          Don't you have an account ?<Link to="/register">Register</Link>
+        </Typography>
       </Paper>
     </Grid>
   )

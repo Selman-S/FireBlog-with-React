@@ -11,15 +11,16 @@ import googleSvg from '../assets/google.svg'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import blogLogin from '../assets/blok.png'
-import { createUser } from '../helper/firebase'
+import { createUser, signupProvider } from '../helper/firebase'
 
 const Register = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const handleSubmit = e => {
     e.preventDefault(e)
-    createUser(email, password, navigate)
+    createUser(email, password, navigate, name)
     setEmail('')
     setPassword('')
   }
@@ -29,7 +30,7 @@ const Register = () => {
         elevation={10}
         style={{
           padding: 20,
-          height: '530px',
+          height: '600px',
           width: '350px',
           margin: '3rem auto 5rem',
         }}
@@ -51,6 +52,17 @@ const Register = () => {
         <Grid align="center" component="form" onSubmit={handleSubmit}>
           <TextField
             sx={{ mt: 2, fontFamily: 'roboto' }}
+            label="Name"
+            inputProps={{ style: { fontFamily: 'roboto' } }}
+            InputLabelProps={{ style: { fontFamily: 'roboto' } }}
+            value={name}
+            onChange={e => setName(e.target.value)}
+            placeholder=" Enter Your Name"
+            fullWidth
+            required
+          />
+          <TextField
+            sx={{ mt: 2, fontFamily: 'roboto' }}
             label="Email"
             inputProps={{ style: { fontFamily: 'roboto' } }}
             InputLabelProps={{ style: { fontFamily: 'roboto' } }}
@@ -58,6 +70,7 @@ const Register = () => {
             onChange={e => setEmail(e.target.value)}
             placeholder=" Enter Email"
             fullWidth
+            required
           />
           <TextField
             sx={{ mt: 2, fontFamily: 'roboto' }}
@@ -72,27 +85,29 @@ const Register = () => {
             required
           />
           <Button
-            sx={{ mt: 2, fontFamily: 'roboto' }}
+            sx={{ mt: 1, fontFamily: 'roboto' }}
             type="submit"
             variant="contained"
             fullWidth
           >
             Register
           </Button>
-          <Typography sx={{ mt: 2, fontFamily: 'roboto' }}>
-            Do you have an account ?<Link to="/login">Login</Link>
-          </Typography>
+          <Typography sx={{ mt: 1, fontFamily: 'roboto' }}>or</Typography>
         </Grid>
         <Button
-          sx={{ mt: 2, fontFamily: 'roboto' }}
+          sx={{ mt: 1, fontFamily: 'roboto' }}
           variant="contained"
           fullWidth
+          onClick={() => signupProvider(navigate)}
         >
           Continue with Google{' '}
           <Avatar sx={{ backgroundColor: 'inherit', height: '27px' }}>
             <img src={googleSvg} style={{ width: '25px' }} alt="" />
           </Avatar>
         </Button>
+        <Typography align="center" sx={{ mt: 2, fontFamily: 'roboto' }}>
+          Do you have an account ?<Link to="/login">Login</Link>
+        </Typography>
       </Paper>
     </Grid>
   )

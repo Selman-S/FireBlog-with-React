@@ -9,19 +9,21 @@ import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
+
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
-import AdbIcon from '@mui/icons-material/Adb'
+
 import { grey } from '@mui/material/colors'
 
 import cw from '../assets/cw.jpeg'
+import { AuthContext } from '../context/AuthContext'
+import { useContext } from 'react'
 
-const pages = ['Dashboard', 'Profile', 'About', 'Login', 'Register']
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+import { logout } from '../helper/firebase'
 
 const Navbar = () => {
-  const user = false
+  const { currentUser } = useContext(AuthContext)
+  console.log(currentUser)
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
 
@@ -40,6 +42,10 @@ const Navbar = () => {
     setAnchorElUser(null)
   }
 
+  const handleLogout = () => {
+    handleCloseUserMenu()
+    logout()
+  }
   return (
     <AppBar position="static" sx={{ backgroundColor: 'primary.main' }}>
       <Container maxWidth="xl">
@@ -91,7 +97,18 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Semy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar src="/static/images/avatar/1.jpg">
+                  {' '}
+                  <img
+                    width="40"
+                    src={
+                      currentUser
+                        ? currentUser.photoURL
+                        : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'
+                    }
+                    alt=""
+                  />{' '}
+                </Avatar>
               </IconButton>
             </Tooltip>
             <Menu
@@ -110,7 +127,7 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {user ? (
+              {currentUser ? (
                 <Box>
                   <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center">
@@ -141,7 +158,7 @@ const Navbar = () => {
                       </Link>
                     </Typography>
                   </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
+                  <MenuItem onClick={handleLogout}>
                     <Typography
                       textAlign="center"
                       style={{
