@@ -143,7 +143,7 @@ const Navbar = () => {
                 <HomeIcon></HomeIcon>
               </Link>
               <Link
-                to="/"
+                to="/myposts"
                 style={{
                   fontFamily: 'roboto',
                   color: 'white',
@@ -285,9 +285,6 @@ const Navbar = () => {
                     )}
                   </Menu>
                 </Box>
-                <Typography onClick={handleOpenUserMenu} sx={{ my: 'auto' }}>
-                  {useName}
-                </Typography>{' '}
               </Box>
               <IconButton
                 size="large"
