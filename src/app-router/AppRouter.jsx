@@ -9,7 +9,6 @@ import Profile from '../pages/Profile'
 import Register from '../pages/Register'
 import MyPosts from '../pages/MyPosts'
 
-import NewBlog from '../pages/NewBlog'
 import PrivateRouter from './PrivateRouter'
 import Details from '../pages/Details'
 
@@ -32,9 +31,6 @@ const AppRouter = () => {
         </Route>
         <Route path="myposts" element={<PrivateRouter />}>
           <Route path="" element={<MyPosts />} />
-        </Route>
-        <Route path="newblog" element={<PrivateRouter />}>
-          <Route path="" element={<NewBlog />} />
         </Route>
       </Routes>
     </BrowserRouter>

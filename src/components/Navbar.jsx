@@ -97,8 +97,8 @@ const Navbar = () => {
     <>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
-          <Toolbar>
-            <Box sx={{ flexGrow: 0, display: 'flex', mr: 2 }}>
+          <Toolbar sx={{ justifyContent: 'space-between' }}>
+            <Box sx={{ display: 'flex', mr: 2 }}>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -110,29 +110,26 @@ const Navbar = () => {
                   <img src={cw} alt="logo" width="50px" />
                 </Link>
               </IconButton>
+              <Box sx={{ my: 'auto' }}>
+                <Search
+                  sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}
+                >
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase
+                    placeholder="Search…"
+                    inputProps={{ 'aria-label': 'search' }}
+                  />
+                </Search>
+              </Box>{' '}
             </Box>
-            <Search sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </Search>
             <Box
-              sx={{
-                flexGrow: 1,
-
-                display: { xs: 'none', sm: 'none', md: 'block' },
-              }}
-            />
-            <Box
+              sx={{ display: { xs: 'none', sm: 'flex', md: 'flex' } }}
               style={{
-                display: 'flex',
                 flexGrow: 1,
                 marginRight: '30%',
-                gap: '70%',
+                gap: '2rem',
               }}
             >
               <Link
@@ -160,7 +157,6 @@ const Navbar = () => {
             <Box
               sx={{
                 display: { xs: 'flex', md: 'flex' },
-                border: '1px solid red',
               }}
             >
               <Box sx={{ display: 'flex', cursor: 'pointer' }}>
