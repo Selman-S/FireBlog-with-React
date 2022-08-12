@@ -17,13 +17,18 @@ const BlogForm = () => {
   return (
     <Container
       maxWidth="xl"
-      style={{ width: '590px', border: '1px solid red' }}
+      style={{
+        width: {
+          xs: '590px',
+          sm: '590px',
+          md: '590px',
+          xl: '590px',
+          xxl: '700px',
+        },
+        border: '1px solid red',
+      }}
       sx={{
         p: 4,
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        gap: 10,
       }}
     >
       {data.map(card => (

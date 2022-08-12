@@ -13,16 +13,18 @@ import MenuItem from '@mui/material/MenuItem'
 import SearchIcon from '@mui/icons-material/Search'
 import MailIcon from '@mui/icons-material/Mail'
 import NotificationsIcon from '@mui/icons-material/Notifications'
+import userPhoto from '../assets/user.jfif'
+import MenuIcon from '@mui/icons-material/Menu'
 import Avatar from '@mui/material/Avatar'
 import Tooltip from '@mui/material/Tooltip'
 import { grey } from '@mui/material/colors'
 import cw from '../assets/cw.jpeg'
 import HomeIcon from '@mui/icons-material/Home'
-import PostAddIcon from '@mui/icons-material/PostAdd'
 import { AuthContext } from '../context/AuthContext'
 import { useContext } from 'react'
 import { logout } from '../helper/firebase'
-
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline'
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo'
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -150,7 +152,27 @@ const Navbar = () => {
                   textDecoration: 'none',
                 }}
               >
-                <PostAddIcon></PostAddIcon>
+                <PeopleOutlineIcon></PeopleOutlineIcon>
+              </Link>{' '}
+              <Link
+                to="/watch"
+                style={{
+                  fontFamily: 'roboto',
+                  color: 'white',
+                  textDecoration: 'none',
+                }}
+              >
+                <OndemandVideoIcon></OndemandVideoIcon>
+              </Link>
+              <Link
+                to="/bookmark"
+                style={{
+                  fontFamily: 'roboto',
+                  color: 'white',
+                  textDecoration: 'none',
+                }}
+              >
+                <MenuIcon></MenuIcon>
               </Link>
             </Box>
 
@@ -159,18 +181,33 @@ const Navbar = () => {
                 display: { xs: 'flex', md: 'flex' },
               }}
             >
-              <Box sx={{ display: 'flex', cursor: 'pointer' }}>
+              {' '}
+              <IconButton
+                size="large"
+                aria-label="show 4 new mails"
+                color="inherit"
+              >
+                <Badge badgeContent={4} color="error">
+                  <MailIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                size="large"
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                <Badge badgeContent={17} color="error">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              <Box sx={{ display: 'flex', cursor: 'pointer', ml: 2 }}>
                 <Box sx={{ my: 'auto', mx: 1 }}>
-                  <Tooltip title="Open settings">
+                  <Tooltip title="Account">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Avatar src="/static/images/avatar/1.jpg">
                         <img
-                          width="40"
-                          src={
-                            currentUser
-                              ? currentUser.photoURL
-                              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'
-                          }
+                          width="50"
+                          src={currentUser ? currentUser.photoURL : userPhoto}
                           alt=""
                         />
                       </Avatar>
@@ -286,24 +323,6 @@ const Navbar = () => {
                   </Menu>
                 </Box>
               </Box>
-              <IconButton
-                size="large"
-                aria-label="show 4 new mails"
-                color="inherit"
-              >
-                <Badge badgeContent={4} color="error">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                <Badge badgeContent={17} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
             </Box>
           </Toolbar>
         </AppBar>

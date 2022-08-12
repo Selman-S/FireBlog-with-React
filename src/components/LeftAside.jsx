@@ -18,10 +18,11 @@ const LeftAside = () => {
 
   return (
     <Box
-      sx={{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' } }}
+      sx={{
+        display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' },
+        width: { lg: '300px', xl: '360px' },
+      }}
       style={{
-        minWidth: '300px',
-        maxWidth: '360px',
         border: '1px solid red',
         padding: '.5rem',
       }}

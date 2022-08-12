@@ -20,14 +20,9 @@ const BlogCard = ({ card }) => {
   const timeLocal = new Date().toLocaleTimeString()
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 680, mb: 2.5 }}>
       <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image={card.imgUrl}
-          alt="green iguana"
-        />
+        <CardMedia component="img" image={card.imgUrl} alt="green iguana" />
         <CardContent>
           <Typography
             sx={{ color: 'primary.light', fontFamily: 'Girassol' }}
