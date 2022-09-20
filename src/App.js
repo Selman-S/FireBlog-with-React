@@ -6,7 +6,7 @@ import { ToastContainer } from 'react-toastify'
 import { BlogProvider } from './context/BlogContext'
 
 function App() {
-  console.log(theme)
+
   return (
     <ThemeProvider theme={theme}>
       <AuthProvider>
